@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 from scipy.signal import iirfilter, freqz
 
 # Define the center frequencies
-center_frequencies = [250, 375, 563, 844, 1266, 1898, 2848, 4271]
+center_frequencies = [245, 367, 551, 827, 1240, 1860, 2790, 4185]
 Q = 6
 fs = 48000  # Sampling frequency
 
 # Prepare the plot
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(11, 6))
 
 # Initialize the cumulative frequency response
 cumulative_h = np.zeros(8000)

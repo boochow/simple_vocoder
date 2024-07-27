@@ -10,7 +10,7 @@
 using namespace dsp;
 
 const float BANDS[NUM_BANDS] = {
-    250, 375, 563, 844, 1266, 1898, 2848, 4271
+    245, 367, 551, 827, 1240, 1860, 2790, 4185
 };
 
 class ChannelVocoder {
