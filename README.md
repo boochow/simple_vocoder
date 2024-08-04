@@ -1,5 +1,5 @@
 # Simple vocoder
-This is a basic implementation of a vocoder for NTS-1 mk II. Connect your voice source to the audio-in to play some robot voice.
+This is a basic implementation of a vocoder for NTS-1 mk II and [NTS-3 kaoss pad](https://github.com/boochow/simple_vocoder/blob/nts-3/README.md). Connect your voice source to the audio-in to play some robot voice.
 
 ## Oscillator parameters
 
