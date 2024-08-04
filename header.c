@@ -34,40 +34,51 @@
 /*
  *  File: header.c
  *
- *  NTS-1 mkII oscillator unit header definition
+ *  NTS-3 kaoss pad kit generic effect unit header definition
  *
  */
 
-#include "unit_osc.h"   // Note: Include base definitions for osc units
+#include "unit_genericfx.h"   // Note: Include base definitions for genericfx units
 
 // ---- Unit header definition  --------------------------------------------------------------------
 
-const __unit_header unit_header_t unit_header = {
-    .header_size = sizeof(unit_header_t),                  // Size of this header. Leave as is.
-    .target = UNIT_TARGET_PLATFORM | k_unit_module_osc,    // Target platform and module pair for this unit
-    .api = UNIT_API_VERSION,                               // API version for which unit was built. See runtime.h
+const __unit_header genericfx_unit_header_t unit_header = {
+  .common = {
+    .header_size = sizeof(genericfx_unit_header_t),           // Size of this header. Leave as is.
+    .target = UNIT_TARGET_PLATFORM | k_unit_module_genericfx, // Target platform and module pair for this unit
+    .api = UNIT_API_VERSION,                                  // API version for which unit was built. See runtime.h
     .dev_id = 0x42636877U,  // "Bchw"
-    .unit_id = 0x00000000,  // Product number(01),Unit type(01=Synth),reserved
+    .unit_id = 0x00000000,  // Product number(00),Unit type(00=GenFX),reserved
     .version = 0x00000000U,
     .name = "test",
-    .num_params = 2,
+    .num_params = 5,
     .params = {
         // Format:
         // min, max, center, default, type, frac. bits, frac. mode, <reserved>, name
-        // Fixed/direct UI parameters
-        // A knob
-        {0, 1023, 0, 511, k_unit_param_type_none, 0, 0, 0, {"DCAY"}},
+        {0, 1023, 0, 0, k_unit_param_type_none, 0, 0, 0, {"PITCH"}},
+        {-1000, 1000, 0, 0, k_unit_param_type_drywet, 1, 1, 0, {"DEPTH"}},
+        {0, 1023, 0, 800, k_unit_param_type_none, 0, 0, 0, {"DECAY"}},
+        {0, 1023, 0, 800, k_unit_param_type_none, 0, 0, 0, {"GAIN"}},
+        {0, 1, 0, 1, k_unit_param_type_strings, 0, 0, 0, {"CHROMA"}},
 
-        // B knob
-        {0, 1023, 0, 511, k_unit_param_type_none, 0, 0, 0, {"GAIN"}},
-
-        // 8 Edit menu parameters
-        {0, 0, 0, 0, k_unit_param_type_none, 0, 0, 0, {""}},
-        {0, 0, 0, 0, k_unit_param_type_none, 0, 0, 0, {""}},
-        {0, 0, 0, 0, k_unit_param_type_none, 0, 0, 0, {""}},
-        {0, 0, 0, 0, k_unit_param_type_none, 0, 0, 0, {""}},
-        {0, 0, 0, 0, k_unit_param_type_none, 0, 0, 0, {""}},
         {0, 0, 0, 0, k_unit_param_type_none, 0, 0, 0, {""}},
         {0, 0, 0, 0, k_unit_param_type_none, 0, 0, 0, {""}},
         {0, 0, 0, 0, k_unit_param_type_none, 0, 0, 0, {""}}},
+  },
+  .default_mappings = {
+    // By default, the parameters described above will be mapped to controls as described below.
+    // These assignments can be overriden by the user.
+    // Format: assign, curve, curve polarity, min, max, default value
+
+    {k_genericfx_param_assign_x, k_genericfx_curve_linear, k_genericfx_curve_unipolar, 288, 392, 328},
+    {k_genericfx_param_assign_depth, k_genericfx_curve_exp, k_genericfx_curve_bipolar, -1000, 1000, 0},
+    {k_genericfx_param_assign_none, k_genericfx_curve_linear, k_genericfx_curve_unipolar, 0, 1023, 800},
+    {k_genericfx_param_assign_none, k_genericfx_curve_linear, k_genericfx_curve_unipolar, 0, 1023, 800},
+    {k_genericfx_param_assign_none, k_genericfx_curve_linear, k_genericfx_curve_bipolar, 0, 1, 1},
+
+    // Not used
+    {k_genericfx_param_assign_none, k_genericfx_curve_linear, k_genericfx_curve_unipolar, 0, 0, 0},
+    {k_genericfx_param_assign_none, k_genericfx_curve_linear, k_genericfx_curve_unipolar, 0, 0, 0},
+    {k_genericfx_param_assign_none, k_genericfx_curve_linear, k_genericfx_curve_unipolar, 0, 0, 0}
+  }
 };
