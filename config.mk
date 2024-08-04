@@ -2,8 +2,8 @@
 # Configuration for Makefile
 #
 
-PROJECT := simple_vocoder_osc
-PROJECT_TYPE := osc
+PROJECT := simple_vocoder_fx
+PROJECT_TYPE := genericfx
 
 ##############################################################################
 # Sources

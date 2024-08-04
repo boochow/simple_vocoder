@@ -34,82 +34,62 @@
 /*
  *  File: unit.cc
  *
- *  NTS-1 mkII oscillator unit interface
+ *  NTS-3 kaoss pad kit generic effect unit interface
  *
  */
 
-#include "unit_osc.h"                       // Note: Include base definitions for osc units
+#include "unit_genericfx.h"                 // Note: Include base definitions for genericfx units
 
-#include "osc.h"                            // Note: Include custom osc code
+#include "effect.h"                         // Note: Include template effect code
 
-static Osc s_osc_instance;                  // Note: In this example, actual instance of custom osc object.
+static Effect s_effect_instance;            // Note: In this example, actual effect instance.
 
 // ---- Callbacks exposed to runtime ----------------------------------------------
 
 __unit_callback int8_t unit_init(const unit_runtime_desc_t * desc) {
-  return s_osc_instance.Init(desc);
+  return s_effect_instance.Init(desc);
 }
 
 __unit_callback void unit_teardown() {
-  s_osc_instance.Teardown();
+  s_effect_instance.Teardown();
 }
 
 __unit_callback void unit_reset() {
-  s_osc_instance.Reset();
+  s_effect_instance.Reset();
 }
 
 __unit_callback void unit_resume() {
-  s_osc_instance.Resume();
+  s_effect_instance.Resume();
 }
 
 __unit_callback void unit_suspend() {
-  s_osc_instance.Suspend();
+  s_effect_instance.Suspend();
 }
 
 __unit_callback void unit_render(const float * in, float * out, uint32_t frames) {
-  s_osc_instance.Process(in, out, frames);
+  s_effect_instance.Process(in, out, frames);
 }
 
 __unit_callback void unit_set_param_value(uint8_t id, int32_t value) {
-  s_osc_instance.setParameter(id, value);
+  s_effect_instance.setParameter(id, value);
 }
 
 __unit_callback int32_t unit_get_param_value(uint8_t id) {
-  return s_osc_instance.getParameterValue(id);
+  return s_effect_instance.getParameterValue(id);
 }
 
 __unit_callback const char * unit_get_param_str_value(uint8_t id, int32_t value) {
-  return s_osc_instance.getParameterStrValue(id, value);
+  return s_effect_instance.getParameterStrValue(id, value);
 }
 
 __unit_callback void unit_set_tempo(uint32_t tempo) {
-  s_osc_instance.setTempo(tempo);
+  s_effect_instance.setTempo(tempo);
 }
 
 __unit_callback void unit_tempo_4ppqn_tick(uint32_t counter) {
-  s_osc_instance.tempo4ppqnTick(counter);
+  s_effect_instance.tempo4ppqnTick(counter);
 }
 
-__unit_callback void unit_note_on(uint8_t note, uint8_t velo) {
-  s_osc_instance.NoteOn(note, velo);
-}
-
-__unit_callback void unit_note_off(uint8_t note) {
-  s_osc_instance.NoteOff(note);
-}
-
-__unit_callback void unit_all_note_off() {
-  s_osc_instance.AllNoteOff();
-}
-
-__unit_callback void unit_pitch_bend(uint16_t bend) {
-  s_osc_instance.PitchBend(bend);
-}
-
-__unit_callback void unit_channel_pressure(uint8_t press) {
-  s_osc_instance.ChannelPressure(press);
-}
-
-__unit_callback void unit_aftertouch(uint8_t note, uint8_t press) {
-  s_osc_instance.AfterTouch(note, press);
+__unit_callback void unit_touch_event(uint8_t id, uint8_t phase, uint32_t x, uint32_t y) {
+  s_effect_instance.touchEvent(id, phase, x, y);
 }
